@@ -39,4 +39,19 @@
     # it must work from any revision, including ones without this library.
     compareConfigs = ./golden/compare-configs.sh;
   };
+
+  # ── structure lints (library surface — enforced boundaries) ──
+  # Consumed as flake checks by the machine repos; each script takes the scan
+  # root as its only argument and exits non-zero on violations. Reach these
+  # through the API (mayoLib.lints.*), never by raw path (api-freeze enforces).
+  lints = {
+    # Ketchup ↔ Mayo must never import each other (split-readiness).
+    layerBoundary = ./lints/layer-boundary.sh;
+    # Consumers only touch topology_library.nix / mayo_library.nix.
+    apiFreeze = ./lints/api-freeze.sh;
+    # Mayo-owned files never reappear under a consumer's lib/ (D-10).
+    antiVendor = ./lints/anti-vendor.sh;
+    # D-08 staging doctrine for machine repos (no ciphertext, no age -d).
+    d08Lint = ./lints/d08-lint.sh;
+  };
 }
