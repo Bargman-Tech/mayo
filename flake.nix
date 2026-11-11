@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 {
   description = "Mayo — shared configuration surface (topology engine, known-hosts, rclone target) for the Bargman-Tech fleet. Mayo-split Step 3: consumed by github.com/DarthPJB/NixOS-Configuration (parent) and gitlab.com/mecha-team-zero/gaming-host-1 (child).";
 
