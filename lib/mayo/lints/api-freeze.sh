@@ -6,13 +6,16 @@
 # references to any other library path bypass the freeze and break the
 # split-readiness guarantee.
 #
+#   Bare `${mayo.lib}` (no path suffix) is a directory reference and allowed —
+#   the freeze guards FILE access, which is what bypasses the API surface.
+#
 # usage: api-freeze.sh <repo-root>
 #   <repo-root>  the consuming repository (scanned for *.nix)
 set -euo pipefail
 
 root="${1:?usage: api-freeze.sh <repo-root>}"
 
-allowed=$'/ketchup/topology_library.nix\n/mayo/mayo_library.nix'
+allowed=$'\n/ketchup/topology_library.nix\n/mayo/mayo_library.nix'
 violations=0
 
 while IFS= read -r -d '' f; do
