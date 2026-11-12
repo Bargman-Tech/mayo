@@ -22,6 +22,17 @@
   # ── reusable NixOS modules (system configuration helpers) ──
   rcloneTarget = ./rclone-target.nix;
 
+  # ── monitoring tooling (other library assets — secret-sauce plan R2) ──
+  # Grafana dashboard generation: inventory -> dashboard attrsets. Both the
+  # generator and the template set take ALL fleet data injected (inventory,
+  # datasource) — they name no machines and import no other layer.
+  monitoring = {
+    # { lib }: { inventory, datasource }: builder API (panel/row/mkDashboard/…)
+    genDashboard = ./monitoring/genDashboard.nix;
+    # Template catalogue: import mayoLib.monitoring.dashboards { dash = …; }
+    dashboards = ./monitoring/dashboard_templates;
+  };
+
   # ── golden tooling (library surface — ruling 2026-11-11) ──
   golden = {
     # Config serializer (the one true serializer; used by dump-config and

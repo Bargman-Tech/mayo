@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Mayo structure lint: anti-vendoring (LDR-001 D-10).
 #
-# Library files owned by mayo must never reappear inside a consumer repo's
-# lib/ tree. Re-vendoring is the failure mode this whole architecture
-# eliminated; the lint keeps it eliminated.
+# Library files owned by the shared libraries (mayo, nix-github-ci) must never
+# reappear inside a consumer repo's lib/ tree. Re-vendoring is the failure mode
+# this whole architecture eliminated; the lint keeps it eliminated.
 #
 # usage: anti-vendor.sh <repo-root>
 #   <repo-root>  the consuming repository
@@ -27,6 +27,13 @@ forbidden=(
   genNetwork.nix genForwarding.nix genTailscale.nix genMonitoring.nix
   # mayo layer golden tooling
   coverage.nix apps.nix
+  # mayo layer monitoring tooling (secret-sauce plan R2)
+  genDashboard.nix
+  ai-inference.nix ai-systems.nix cpu-frequency.nix
+  fleet-cpu-disk-light.nix fleet-cpu-disk.nix fleet-deployment.nix
+  fleet-network.nix service-health.nix storage-health.nix
+  # nix-github-ci (secret-sauce plan R1)
+  ci_library.nix mk-ci.nix
 )
 
 violations=0
